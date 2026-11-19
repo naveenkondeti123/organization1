@@ -1,39 +1,40 @@
-name: reusable worflow
+
+name: Reusable Workflow
 
 on:
- workflow_call:
-  inputs:
-   service_name:
-      description: "microservice name"
-      requried: true
-      type: string
-   node-version:
-      requried: true
-      type: string
-   environment:
-      description: "target env name"
-      requried: true
-      type: string
+  workflow_call:
+    inputs:
+      service_name:
+        description: "Microservice name"
+        required: true
+        type: string
+      node-version:
+        description: "Node.js version"
+        required: true
+        type: string
+      environment:
+        description: "Target environment name"
+        required: true
+        type: string
 
 jobs:
- build:
-   runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-   steps:
-    - name: checkout sourec code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
 
-    - name: disply informnations
-      run: |
-      echo "service : ${{ inputs.service_name}}"
-      echo "environment: ${{ inputs.environment}}"
-      echo "branch: ${{ github.ref_name}}"
+      - name: Display information
+        run: |
+          echo "Service: ${{ inputs.service_name }}"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Branch: ${{ github.ref_name }}"
 
-    - name: setup noode version
-      uses: actions/setup-node@v3
-      with:
-       node-version: ${{inputs.node-version}}
-      run: |
-       npm install
-  
- 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies
+        run: npm install
